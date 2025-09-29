@@ -14,7 +14,7 @@ const Auth0ProviderWithNavigate = ({ children }: Props) => {
     }
 
     const onRedirectCallback = (appState?: AppState, user?: User) => {
-
+        console.log("User", user)
     }
     return (
         <Auth0Provider 
