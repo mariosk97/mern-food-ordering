@@ -7,7 +7,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const useSearchRestaurant = (SearchState: SearchState, city?: string) => {
     const createSearchRequest = async (): Promise<RestaurantSearchResponse> => {
         const params = new URLSearchParams();
-        params.set("searchQuery", SearchState.searchQuery)
+        params.set("searchQuery", SearchState.searchQuery);
+        params.set("page", SearchState.page.toString());
+        params.set("selectedCuisines", SearchState.selectedCuisines.join(","))
         
         const response = await fetch(
             `${API_BASE_URL}/api/restaurant/search/${city}?${params.toString()}`
