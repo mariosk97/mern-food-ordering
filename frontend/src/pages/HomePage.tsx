@@ -21,9 +21,8 @@ const HomePage = () => {
                     Food is just a click away!
                 </span>
                 <SearchBar 
-                    placeholder="Search by City or Town" 
+                    placeholder="Search by City or Town (athens or london)" 
                     onSubmit={handleSearchSubmit}  
-                    searchQuery=""
                 />
             </div>
             <div className="grid md:grid-cols-2 gap-5">

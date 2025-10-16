@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth0();
-  const [shouldRender, setShouldRender] = useState(false);
 
-  useEffect(() => {
-    if (!isLoading) {
-      const timeout = setTimeout(() => setShouldRender(true), 500);
-      return () => clearTimeout(timeout);
-    }
-  }, [isLoading]);
-
-  if (isLoading || !shouldRender) {
-    return <div className="flex items-center justify-center min-h-screen text-lg">Loading...</div>;
+  // Wait for Auth0 to finish checking session
+  if (isLoading) {
+    return <div className="text-center py-10">Loading...</div>;
   }
 
-  if (isAuthenticated) return <Outlet />;
+  // If user not authenticated, redirect to home
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
 
-  return <Navigate to="/" replace />;
+  // Otherwise, show the protected content
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
