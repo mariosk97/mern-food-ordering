@@ -4,10 +4,25 @@ import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+type CheckoutSessionRequest = {
+    cartItems: {
+        menuItemId: string;
+        name: string;
+        quantity: string;
+    }[];
+    deliveryDetails: {
+        email: string;
+        name: string;
+        addressLine1: string;
+        city: string;
+    }
+    restaurantId: string;
+}
+
 export const useCreateCheckoutSession = () => {
     const { getAccessTokenSilently } = useAuth0();
 
-    const createCheckoutSessionRequest = async (checkoutSessionRequest) => {
+    const createCheckoutSessionRequest = async (checkoutSessionRequest: CheckoutSessionRequest) => {
         const accessToken = await getAccessTokenSilently();
 
         const response = await fetch(`${API_BASE_URL}/api/order/checkout/create-checkout-session`, {
